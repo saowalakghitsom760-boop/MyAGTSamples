@@ -18,8 +18,8 @@ internal sealed record AppConfiguration(
     /// </summary>
     public static AppConfiguration LoadFromEnvironment()
     {
-        var endpoint = GetRequiredEnvironmentVariable("MS_FOUNDRY_ENDPOINT");
-        var deploymentName = Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT") ?? "gpt-5.4-mini";
+        var endpoint = GetRequiredEnvironmentVariable("AZURE_OPENAI_ENDPOINT");
+        var deploymentName = Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT_NAME") ?? "gpt-4.1-mini";
         var applicationInsightsConnectionString = GetRequiredEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
         var storageAccountName = GetRequiredEnvironmentVariable("AZURE_STORAGE_ACCOUNT_NAME");
         var storageAccountUri = $"https://{storageAccountName}.blob.core.windows.net/";
@@ -45,7 +45,7 @@ internal sealed record AppConfiguration(
             return new DefaultAzureCredential(new DefaultAzureCredentialOptions
             {
                 TenantId = TenantId,
-                ExcludeManagedIdentityCredential = true,   // TODO: This should be enabled on production env
+                ExcludeManagedIdentityCredential = true,
             });
         }
 
